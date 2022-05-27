@@ -56,16 +56,19 @@ include(cmake/CompilerWarnings.cmake)
 
 #! Project main executable source compilation
 add_executable(${PROJECT_NAME} main.cpp
-				options_parser/options_parser.cpp options_parser/options_parser.h)
+				options_parser/options_parser.cpp options_parser/options_parser.h mpi/src/table_t.cpp mpi/inc/table_t.h)
 
 #! Put path to your project headers
-target_include_directories(${PROJECT_NAME} PRIVATE options_parser)
+target_include_directories(${PROJECT_NAME} PRIVATE options_parser mpi/inc)
 
 #! Add external packages
-# options_parser requires boost::program_options library
-find_package(Boost 1.71.0 COMPONENTS program_options system REQUIRED)
+find_package(MPI REQUIRED)
+target_include_directories(${PROJECT_NAME} PUBLIC ${MPI_CXX_INCLUDE_PATH})
+target_link_libraries(${PROJECT_NAME} ${MPI_CXX_LIBRARIES})
+
+find_package(Boost 1.71.0 COMPONENTS mpi serialization program_options system REQUIRED)
 target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} Boost::program_options Boost::system)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 						
 ##########################################################
