@@ -75,14 +75,10 @@ find_package(Boost 1.71.0 COMPONENTS mpi serialization program_options system RE
 target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
-<<<<<<< HEAD
-
-=======
 find_package(TIFF REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${TIFF_INCLUDE_PATH})
 target_link_libraries(${PROJECT_NAME} ${TIFF_LIBRARIES})
-						
->>>>>>> b586a694616d226445d341641351a97194a62e7a
+
 ##########################################################
 # Fixed CMakeLists.txt part 
 ##########################################################
