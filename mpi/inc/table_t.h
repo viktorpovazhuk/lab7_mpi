@@ -9,10 +9,12 @@
 #include <cstddef>
 #include <stdexcept>
 #include <string>
+#include <vector>
+#include <utility>
 
 class table_t {
 public:
-    table_t(size_t n_rows, size_t n_cols, double *data, double dx,double dy) : n_rows(n_rows), n_cols(n_cols), data(data),
+    table_t(size_t n_rows, size_t n_cols, std::vector<double> &&data, double dx,double dy) : n_rows(n_rows), n_cols(n_cols), data(std::move(data)),
     delta_x(dx), delta_y(dy){}
 
     double &operator()(size_t i, size_t j) {
@@ -40,8 +42,8 @@ public:
 
 private:
     size_t n_rows, n_cols;
-    double *data;
     double delta_x, delta_y;
+    std::vector<double> data;
 };
 
 
