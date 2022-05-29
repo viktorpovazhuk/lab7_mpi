@@ -1,22 +1,22 @@
-<mark>Template for your README. Remove all unused parts and instructions</mark>
-
-# Lab work <mark>NUMBER</mark>: <mark>SHORT TOPIC</mark>
-Authors (team): <mark>AUTHORS WITH GITHUB LINKS</mark><br>
+# Lab work 7: Temperature conductivity
+Authors (team): Viktor Povazhuk, Bohdan Mahometa<br>
 Variant: <mark>VARIANT SHOULD BE HERE</mark>
 ## Prerequisites
 
-<mark>LIST LIBRARIES/TOOLS/OTHER UTILITIES THAT NEED TO BE INSTALLED (E.G. GCC, OPENMP, CMAKE ETC)</mark>
+The following tools need to be available in order to use the project:
+- GCC
+- CMake
+- Boost (Boost::program_options and Boost::system, Boost:mpi are used in the project)
+- Python 3 (if you want to run Python scripts)
+- MPI
+- libtiff
 
-### Compilation
+### Compilation (Linux)
 
-<mark>HOW TO COMPILE YOUR PROGRAM? (RECOMMENDED: ./comile.sh)</mark>
+Compile in CLion
 
 ### Installation
 
-<mark>DESCRIBE THE INSTALLATION PROCESS (USE ./dependencies FOLDER)</mark>
-
-<mark>Note: For Python scripts, You must add `requirenments.txt` 
-file and add your env to the `.gitignore` file!</mark>
 
 ### Usage
 
