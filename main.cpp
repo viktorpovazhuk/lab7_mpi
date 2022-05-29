@@ -4,6 +4,7 @@
 #include "options_parser.h"
 #include "table_t.h"
 #include "errors.h"
+#include "image_writer.h"
 
 #include "boost/mpi.hpp"
 

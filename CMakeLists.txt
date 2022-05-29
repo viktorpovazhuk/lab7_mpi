@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 #! Check every comment after the "#!"
 
 #! CHANGE YOUR PROJECT NAME
-#  It is used as your project's main executable name. 
+#  It is used as your project's main executable name.
 set(PROJECT_NAME temp_table)
 project(${PROJECT_NAME} C CXX) # project(${PROJECT_NAME} C CXX ASM)
 
@@ -56,7 +56,12 @@ include(cmake/CompilerWarnings.cmake)
 
 #! Project main executable source compilation
 add_executable(${PROJECT_NAME} main.cpp
-				mpi/src/table_t.cpp mpi/inc/table_t.h mpi/src/options_parser.cpp mpi/inc/options_parser.h mpi/inc/errors.h)
+		mpi/src/table_t.cpp mpi/inc/table_t.h
+		mpi/src/options_parser.cpp mpi/inc/options_parser.h
+		mpi/inc/errors.h
+		mpi/inc/d2rgb_converter.h
+		mpi/src/image_writer.cpp mpi/inc/image_writer.h
+		)
 
 #! Put path to your project headers
 target_include_directories(${PROJECT_NAME} PRIVATE mpi/inc)
@@ -70,7 +75,14 @@ find_package(Boost 1.71.0 COMPONENTS mpi serialization program_options system RE
 target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
+<<<<<<< HEAD
 
+=======
+find_package(TIFF REQUIRED)
+target_include_directories(${PROJECT_NAME} PUBLIC ${TIFF_INCLUDE_PATH})
+target_link_libraries(${PROJECT_NAME} ${TIFF_LIBRARIES})
+						
+>>>>>>> b586a694616d226445d341641351a97194a62e7a
 ##########################################################
 # Fixed CMakeLists.txt part 
 ##########################################################
