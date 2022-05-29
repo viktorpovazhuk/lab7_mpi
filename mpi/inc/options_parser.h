@@ -74,7 +74,7 @@ public:
     void parse(const std::string &config_file);
 
     double cp, k, p, height, width, dx, dy, dt, interval;
-    std::string table_f;
+    std::string table_f, res_f;
 };
 
 #endif //OPTIONS_PARSER_CONFIG_FILE_H

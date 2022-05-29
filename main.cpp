@@ -170,6 +170,7 @@ int main(int argc, char *argv[]) {
     }
 
     std::string table_path = config_file_options->table_f;
+    std::string res_path = config_file_options->res_f;
     double cp = config_file_options->cp;
     double k = config_file_options->k;
     double p = config_file_options->p;
@@ -183,6 +184,8 @@ int main(int argc, char *argv[]) {
     size_t n_cols = width / dx + 1;
     double alpha = k / (p * cp);
     size_t num_iters = 30ul;
+    double max_temp = 250, min_temp = 0;
+
 
     mpi::environment env;
     mpi::communicator comm;
@@ -200,7 +203,8 @@ int main(int argc, char *argv[]) {
     }
     new_part = table_t{old_part.rows(), old_part.cols(), old_part.dx(), old_part.dy()};
 
-    std::vector<table_t> whole_table(comm.size());
+    std::vector<table_t> all_tables(comm.size());
+    table_t whole_table{n_rows, n_cols, dx, dy};
     for (size_t i = 0; i < num_iters; ++i) {
         calculate_inside_points(old_part, new_part, alpha, dt);
 
@@ -211,16 +215,15 @@ int main(int argc, char *argv[]) {
         std::swap(old_part, new_part);
 
         if (i * dt >= interval) {
-            gather_table(old_part, whole_table, comm);
+            gather_table(old_part, all_tables, comm);
 
-            for (auto &t: whole_table) {
-                for (auto &d: t.data()) {
-                    std::cout << d << "\n";
-                }
+            auto cur_iter = whole_table.data().begin();
+            for (auto &table: all_tables) {
+                std::move(table.data().begin(), table.data().end(), cur_iter);
+                cur_iter += table.data().size();
             }
 
-            // draw table
-
+            write_table_to_file(whole_table, max_temp, min_temp, res_path);
         }
     }
 

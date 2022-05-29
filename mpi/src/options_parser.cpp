@@ -55,7 +55,8 @@ config_file_options_t::config_file_options_t() {
             ("dy", po::value<double>(), "dy")
             ("dt", po::value<double>(), "dt")
             ("interval", po::value<double>(), "interval")
-            ("table_f", po::value<string>(), "table_f");
+            ("table_f", po::value<string>(), "table_f")
+            ("res_f", po::value<string>(), "res_f");
 }
 
 config_file_options_t::config_file_options_t(const string &config_file) :
@@ -85,6 +86,8 @@ void config_file_options_t::parse(const string &config_file) {
         interval = var_map["interval"].as<double>();
         table_f = var_map["table_f"].as<string>();
         table_f.erase(std::remove(table_f.begin(), table_f.end(), '\"'), table_f.end());
+        res_f = var_map["res_f"].as<string>();
+        res_f.erase(std::remove(res_f.begin(), res_f.end(), '\"'), res_f.end());
     } catch (OpenConfigFileException &ex) {
         throw OpenConfigFileException(ex.what()); // Convert to our error type
     } catch (std::exception &ex) {
