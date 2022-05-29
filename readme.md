@@ -22,8 +22,8 @@ file and add your env to the `.gitignore` file!</mark>
 
 <mark>PROVIDE AN EXAMPLE OF HOW TO RUN YOUR PROGRAM (IT CAN BE A_flag COMMAND LINE WITH INPUT AND EXPECTED OUTPUT)</mark>
 
-<mark>Note: if your project needs or generates any data, media and so on -- put them
-into the data folder</mark> 
+<mark>Note: if your project needs or generates any m_data, media and so on -- put them
+into the m_data folder</mark> 
 
 ### Important!
 
