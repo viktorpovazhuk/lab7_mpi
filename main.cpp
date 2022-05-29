@@ -123,14 +123,14 @@ std::vector<double> send_recv_others_points(table_t &part, mpi::communicator &co
         int rank = comm.rank();
         std::vector<double> up_bound_points(part.data().begin(), part.data().begin() + part.cols());
         std::vector<double> down_bound_points(part.data().begin() + part.cols() * (part.rows() - 1), part.data().end());
-        std::vector<double> up_others_points, down_others_points;
+        std::vector<double> up_others_points(part.cols()), down_others_points(part.cols());
         std::vector<mpi::request> reqs(4);
         reqs[0] = comm.isend(rank - 1, 0, up_bound_points);
         reqs[1] = comm.isend(rank + 1, 0, down_bound_points);
         reqs[2] = comm.irecv(rank - 1, 0, up_others_points);
         reqs[3] = comm.irecv(rank + 1, 0, down_others_points);
         mpi::wait_all(reqs.begin(), reqs.end());
-        others_points.resize(part.rows() * 2);
+        others_points.resize(part.cols() * 2);
         std::move(up_others_points.begin(), up_others_points.end(), others_points.begin());
         std::move(down_others_points.begin(), down_others_points.end(), others_points.begin() + up_others_points.size());
     }
@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
     size_t n_rows = height / dy + 1;
     size_t n_cols = width / dx + 1;
     double alpha = k / (p * cp);
-    size_t num_iters = 1ul;
+    size_t num_iters = 30ul;
 
     mpi::environment env;
     mpi::communicator comm;
@@ -213,7 +213,14 @@ int main(int argc, char *argv[]) {
         if (i * dt >= interval) {
             gather_table(old_part, whole_table, comm);
 
+            for (auto &t: whole_table) {
+                for (auto &d: t.data()) {
+                    std::cout << d << "\n";
+                }
+            }
+
             // draw table
+
         }
     }
 
