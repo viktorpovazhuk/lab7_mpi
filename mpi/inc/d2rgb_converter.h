@@ -7,11 +7,13 @@ class double_to_rgb_converter_t {
 public:
     double_to_rgb_converter_t(double range_min, double range_max):
     range_start(range_min), //! Watch the order!!!!!!!
-    range_end(range_max)
+    range_end(range_max),
+    range_median((range_min + range_max) / 2)
     {}
 
     template <typename OutType>
     void double_to_rgb(double val, OutType &out_red, OutType &out_green, OutType &out_blue) {
+        val = (val - range_median) / (range_end - range_start) * 2;
         out_red = std::round((1 + red(val)) / 2 * 255);
         out_green = std::round((1 + green(val)) / 2 * 255);
         out_blue = std::round((1 + blue(val)) / 2 * 255);
@@ -43,9 +45,7 @@ private:
 private:
     double range_start;
     double range_end;
-    double median;
-    double first_quartile;
-    double third_quartile;
+    double range_median;
 };
 
 #endif //TEMPLATE_D2RGB_CONVERTER_H
