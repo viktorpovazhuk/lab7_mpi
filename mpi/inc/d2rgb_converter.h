@@ -2,6 +2,8 @@
 #define TEMPLATE_D2RGB_CONVERTER_H
 
 #include <cmath>
+#include <vector>
+#include "table_t.h"
 
 class double_to_rgb_converter_t {
 public:
@@ -17,6 +19,20 @@ public:
         out_red = std::round((1 + red(val)) / 2 * 255);
         out_green = std::round((1 + green(val)) / 2 * 255);
         out_blue = std::round((1 + blue(val)) / 2 * 255);
+    }
+
+    std::vector<uint8_t> table_to_rgb_array_for_tiff(const table_t &table) {
+        std::vector<uint8_t> vec(3 * table.rows() * table.cols());
+        for (size_t i = 0; i < table.rows(); ++i) {
+            for (size_t j = 0; j < table.cols(); ++j) {
+                uint8_t r, g, b;
+                double_to_rgb(table(i, j), r, g, b);
+                vec[3 * (table.cols() * i + j) + 0] = r;
+                vec[3 * (table.cols() * i + j) + 1] = g;
+                vec[3 * (table.cols() * i + j) + 2] = b;
+            }
+        }
+        return vec;
     }
 private:
 //Inspired by https://stackoverflow.com/a/7706668

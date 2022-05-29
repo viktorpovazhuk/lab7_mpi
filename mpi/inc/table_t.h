@@ -21,7 +21,14 @@ public:
         if (i >= n_rows || j >= n_cols) {
             throw std::runtime_error("Invalid index: " + std::to_string(i) + " , " + std::to_string(j));
         }
-        return data[n_rows * i + j];
+        return data[n_cols * i + j];
+    }
+
+    double operator()(size_t i, size_t j) const {
+        if (i >= n_rows || j >= n_cols) {
+            throw std::runtime_error("Invalid index: " + std::to_string(i) + " , " + std::to_string(j));
+        }
+        return data[n_cols * i + j];
     }
 
     size_t rows() const {

@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.15)
 
 #! CHANGE YOUR PROJECT NAME
 #  It is used as your project's main executable name. 
-set(PROJECT_NAME template)
+set(PROJECT_NAME thermal_conductivity_task)
 project(${PROJECT_NAME} C CXX) # project(${PROJECT_NAME} C CXX ASM)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -60,6 +60,7 @@ add_executable(${PROJECT_NAME} main.cpp
 		mpi/src/options_parser.cpp mpi/inc/options_parser.h
 		mpi/inc/errors.h
 		mpi/inc/d2rgb_converter.h
+		mpi/src/image_writer.cpp mpi/inc/image_writer.h
 		)
 
 #! Put path to your project headers
@@ -74,6 +75,9 @@ find_package(Boost 1.71.0 COMPONENTS mpi serialization program_options system RE
 target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
+find_package(TIFF REQUIRED)
+target_include_directories(${PROJECT_NAME} PUBLIC ${TIFF_INCLUDE_PATH})
+target_link_libraries(${PROJECT_NAME} ${TIFF_LIBRARIES})
 						
 ##########################################################
 # Fixed CMakeLists.txt part 
