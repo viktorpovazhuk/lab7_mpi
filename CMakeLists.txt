@@ -56,7 +56,11 @@ include(cmake/CompilerWarnings.cmake)
 
 #! Project main executable source compilation
 add_executable(${PROJECT_NAME} main.cpp
-				mpi/src/table_t.cpp mpi/inc/table_t.h mpi/src/options_parser.cpp mpi/inc/options_parser.h mpi/inc/errors.h)
+		mpi/src/table_t.cpp mpi/inc/table_t.h
+		mpi/src/options_parser.cpp mpi/inc/options_parser.h
+		mpi/inc/errors.h
+		mpi/inc/d2rgb_converter.h
+		)
 
 #! Put path to your project headers
 target_include_directories(${PROJECT_NAME} PRIVATE mpi/inc)
